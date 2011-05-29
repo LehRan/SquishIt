@@ -432,5 +432,16 @@ namespace SquishIt.Tests
                     .AsCached("Test", "~/js/output_2.js");
             Assert.AreEqual("<script type=\"text/javascript\" src=\"js/test.js\"></script>", tag);
         }
+
+        [Test]
+        public void CanBundleJavaScriptWithDuplications()
+        {
+            var tag = debugJavaScriptBundle
+                    .Add("~/js/test1.js")
+                    .Add("~/js/test1.js")
+                    .Render("~/js/output_dup_1.js");
+
+            Assert.AreEqual("<script type=\"text/javascript\" src=\"js/test1.js\"></script>", tag);
+        }
     }
 }

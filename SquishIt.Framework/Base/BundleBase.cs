@@ -55,7 +55,7 @@ namespace SquishIt.Framework.Base
         	this.bundleCache = bundleCache;
         }
 
-        private List<string> GetFiles(List<Asset> assets)
+        private List<string> GetFiles(IEnumerable<Asset> assets)
         {
             var inputFiles = GetInputFiles(assets);
             var resolvedFilePaths = new List<string>();
@@ -68,7 +68,7 @@ namespace SquishIt.Framework.Base
             return resolvedFilePaths;
         }
 
-        private List<InputFile> GetInputFiles(List<Asset> assets)
+        private List<InputFile> GetInputFiles(IEnumerable<Asset> assets)
         {
             var inputFiles = new List<InputFile>();
             foreach (var asset in assets)

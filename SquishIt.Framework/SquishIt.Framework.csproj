@@ -142,6 +142,7 @@
     <Compile Include="Files\IFileWriter.cs" />
     <Compile Include="Files\IFileWriterFactory.cs" />
     <Compile Include="Utilities\IHasher.cs" />
+    <Compile Include="Utilities\LinkedHashSet.cs" />
     <Compile Include="Utilities\NamedState.cs" />
     <Compile Include="FileSystem.cs" />
   </ItemGroup>
