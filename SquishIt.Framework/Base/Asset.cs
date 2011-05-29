@@ -24,7 +24,7 @@ namespace SquishIt.Framework.Base
         internal class EqualityComparer : EqualityComparer<Asset>
         {
 
-            public internal bool Equals(Asset a1, Asset a2)
+            public override bool Equals(Asset a1, Asset a2)
             {
                 if (a1.LocalPath == a2.LocalPath &
                     a1.RemotePath == a2.RemotePath &
@@ -39,7 +39,7 @@ namespace SquishIt.Framework.Base
                 }
             }
 
-            public internal int GetHashCode(Asset a)
+            public override int GetHashCode(Asset a)
             {
                 int hCode = 
                     (a.LocalPath != null ? a.LocalPath.GetHashCode() : 0) ^
