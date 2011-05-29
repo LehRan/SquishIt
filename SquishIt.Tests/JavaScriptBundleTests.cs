@@ -443,5 +443,16 @@ namespace SquishIt.Tests
 
             Assert.AreEqual("<script type=\"text/javascript\" src=\"js/test1.js\"></script>", tag);
         }
+
+        [Test]
+        public void CanBundleJavaScriptInline()
+        {
+            var inlineTag = debugJavaScriptBundle
+                    .Add("~/js/test1.js")
+                    .Add("~/js/test2.js")
+                    .RenderInLine();
+
+            Assert.AreEqual("<script type=\"text/javascript\">function product(a,b){return a*b}function sum(a,b){return a+b}function product(a,b){return a*b}function sum(a,b){return a+b}</script>", inlineTag);
+        }
     }
 }

@@ -85,7 +85,6 @@
     <Compile Include="Base\Asset.cs" />
     <Compile Include="Base\BundleBase.cs" />
     <Compile Include="Base\GroupBundle.cs" />
-    <Compile Include="Base\IBundle.cs" />
     <Compile Include="IBundleCache.cs" />
     <Compile Include="Minifiers\IMinifier.cs" />
     <Compile Include="Bundle.cs" />

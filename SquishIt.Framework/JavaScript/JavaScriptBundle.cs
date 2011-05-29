@@ -10,6 +10,7 @@ namespace SquishIt.Framework.JavaScript
     public class JavaScriptBundle: BundleBase<JavaScriptBundle>
     {        
         private const string JS_TEMPLATE = "<script type=\"text/javascript\" {0}src=\"{1}\"></script>";
+        private const string INLINE_JS_TEMPLATE = "<script type=\"text/javascript\">{0}</script>";
     	private const string CACHE_PREFIX = "js";
 
     	protected override IMinifier<JavaScriptBundle> DefaultMinifier
@@ -40,6 +41,15 @@ namespace SquishIt.Framework.JavaScript
         protected override string CachePrefix
         {
             get { return CACHE_PREFIX; }
+        }
+
+        public string RenderInLine()
+        {
+            string tmpId = Guid.NewGuid().ToString();
+            this.ForceRelease().AsCached(tmpId, string.Empty);
+            string inlineContent = string.Format(INLINE_JS_TEMPLATE, this.RenderCached(tmpId));
+            //this.ClearCache(); // Relevant only in testing.
+            return inlineContent;
         }
     }
 }
