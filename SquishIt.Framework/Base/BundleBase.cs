@@ -236,6 +236,15 @@ namespace SquishIt.Framework.Base
 			return RenderRelease(name, null, new CacheRenderer(CachePrefix, name));
 		}
 
+        public string RenderInLine()
+        {
+            string tmpId = Guid.NewGuid().ToString();
+            this.ForceRelease().AsCached(tmpId, "~/static/dummy/" + tmpId);
+            string inlineContent = string.Format(InlineTemplate, this.RenderCached(tmpId));
+            //this.ClearCache(); // Relevant only in testing.
+            return inlineContent;
+        }
+
         public void AsNamed(string name, string renderTo)
         {
             Render(renderTo, name, true);
@@ -474,6 +483,7 @@ namespace SquishIt.Framework.Base
         }
 
         protected abstract string Template { get; }
+        protected abstract string InlineTemplate { get; }
         protected abstract string CachePrefix { get; }
     }
 }

@@ -18,6 +18,7 @@ namespace SquishIt.Framework.CSS
         private const string MEDIA_ALL = "all";
         private static Regex IMPORT_PATTERN = new Regex(@"@import +url\(([""']){0,1}(.*?)\1{0,1}\);", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private const string CSS_TEMPLATE = "<link rel=\"stylesheet\" type=\"text/css\" {0}href=\"{1}\" />";
+        private const string INLINE_CSS_TEMPLATE = "<style>{0}</style>";
         private const string CACHE_PREFIX = "css";
 
         private bool ShouldImport { get; set; }
@@ -26,6 +27,11 @@ namespace SquishIt.Framework.CSS
         protected override string Template
         {
             get { return CSS_TEMPLATE; }
+        }
+
+        protected override string InlineTemplate
+        {
+            get { return INLINE_CSS_TEMPLATE; }
         }
 
     	protected override string CachePrefix

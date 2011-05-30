@@ -738,5 +738,40 @@ namespace SquishIt.Tests
 
             Assert.AreEqual("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/temp.css\" />", tag);
         }
+
+        [Test]
+        public void CanBundleCssWithDuplications()
+        {
+            CSSBundle cssBundle = cssBundleFactory
+                .WithHasher(hasher)
+                .WithDebuggingEnabled(false)
+                .Create();
+
+            cssBundleFactory.FileReaderFactory.SetContents(css);
+
+            string tag = cssBundle
+                            .Add("/css/first.css")
+                            .Add("/css/first.css")
+                            .Render("/css/output_dup_1.css");
+            Assert.AreEqual("li{margin-bottom:.1em;margin-left:0;margin-top:.1em}th{font-weight:normal;vertical-align:bottom}.FloatRight{float:right}.FloatLeft{float:left}", cssBundleFactory.FileWriterFactory.Files[TestUtilities.PreparePathRelativeToWorkingDirectory(@"C:\css\output_dup_1.css")]);
+        }
+
+        [Test]
+        public void CanBundleCssInline()
+        {
+            CSSBundle cssBundle = cssBundleFactory
+                .WithHasher(hasher)
+                .WithDebuggingEnabled(false)
+                .Create();
+
+            cssBundleFactory.FileReaderFactory.SetContents(css);
+
+            string inlineTag = cssBundle
+                    .Add("/css/first.css")
+                    .Add("/css/second.css")
+                    .RenderInLine();
+
+            Assert.AreEqual("<style>li{margin-bottom:.1em;margin-left:0;margin-top:.1em}th{font-weight:normal;vertical-align:bottom}.FloatRight{float:right}.FloatLeft{float:left}li{margin-bottom:.1em;margin-left:0;margin-top:.1em}th{font-weight:normal;vertical-align:bottom}.FloatRight{float:right}.FloatLeft{float:left}</style>", inlineTag);
+        }
     }
 }
