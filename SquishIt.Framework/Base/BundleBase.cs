@@ -238,11 +238,17 @@ namespace SquishIt.Framework.Base
 
         public string RenderInLine()
         {
-            string tmpId = Guid.NewGuid().ToString();
-            this.ForceRelease().AsCached(tmpId, "~/static/dummy/" + tmpId);
-            string inlineContent = string.Format(InlineTemplate, this.RenderCached(tmpId));
-            //this.ClearCache(); // Relevant only in testing.
-            return inlineContent;
+            string dummyName = Guid.NewGuid().ToString();
+            string dummyPath = "~/static/dummy/" + dummyName;
+
+            if (debugStatusReader.IsDebuggingEnabled())
+            {
+                return RenderDebug(dummyName);
+            }
+            MemoryRenderer renderer = new MemoryRenderer();
+            RenderRelease(dummyName, dummyPath, renderer);
+
+            return string.Format(InlineTemplate, renderer.Get());
         }
 
         public void AsNamed(string name, string renderTo)
@@ -343,7 +349,7 @@ namespace SquishIt.Framework.Base
                     if (renderTo.Contains("#"))
                     {
                         hashInFileName = true;
-                        minifiedContent = Minifier.Minify(BeforeMinify(outputFile, files));
+                        minifiedContent = GetMinifiedContent(outputFile, files);
                         hash = hasher.GetHash(minifiedContent);
                         renderTo = renderTo.Replace("#", hash);
                     	renderToPath = renderToPath.Replace("#", hash);
@@ -356,7 +362,7 @@ namespace SquishIt.Framework.Base
                     }
                     else
                     {
-                        minifiedContent = minifiedContent ?? Minifier.Minify(BeforeMinify(outputFile, files));
+                        minifiedContent = minifiedContent ?? GetMinifiedContent(outputFile, files);
                         renderer.Render(minifiedContent, outputFile);
                     }
 
@@ -389,6 +395,11 @@ namespace SquishIt.Framework.Base
             }
 
             return content;
+        }
+
+        private string GetMinifiedContent(string outputFile, List<string> files)
+        {
+            return Minifier.Minify(BeforeMinify(outputFile, files));
         }
         
 		public void ClearCache()

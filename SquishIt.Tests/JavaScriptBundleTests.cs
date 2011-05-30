@@ -445,11 +445,12 @@ namespace SquishIt.Tests
         }
 
         [Test]
-        public void CanBundleJavaScriptInline()
+        public void CanBundleJavaScriptInlineWithForcedRelease()
         {
             var inlineTag = debugJavaScriptBundle
                     .Add("~/js/test1.js")
                     .Add("~/js/test2.js")
+                    .ForceRelease()
                     .RenderInLine();
 
             Assert.AreEqual("<script type=\"text/javascript\">/* <![CDATA[ */ function product(a,b){return a*b}function sum(a,b){return a+b}function product(a,b){return a*b}function sum(a,b){return a+b} /* ]]> */</script>", inlineTag);
