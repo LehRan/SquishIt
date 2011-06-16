@@ -259,7 +259,7 @@ namespace SquishIt.Tests
             string css =
                 @"
                                                         .header {
-                                                                background-image: url('../img/something.jpg');
+                                                                background-image: url('../img/something.jpg?q=m');
                                                         }
 
                                                         .footer {
@@ -273,7 +273,7 @@ namespace SquishIt.Tests
             string expected =
                 @"
                                                         .header {
-                                                                background-image: url('img/something.jpg');
+                                                                background-image: url('img/something.jpg?q=m');
                                                         }
 
                                                         .footer {
